@@ -2,17 +2,38 @@ import { Video } from "@/app/videos";
 import { LuDot } from "react-icons/lu";
 import convertTimeStamp from "@/utils/TimeStampConvert";
 import formatViews from "@/utils/ViewsFormatter";
-import { Link } from "react-router-dom";
 import useGetChannel from "@/app/profile";
 import convertMillisecondsToTimestamp from "@/utils/MilliSecToTimeStamp";
+import axios from "axios";
+import { useGetWatchHistory } from "@/app/videos";
+import { useNavigate } from "react-router";
 
 export default function VideoCart({video,url}:{video:Video,url:string}) {
+    const navigate=useNavigate()
     const {data:ownerDetails}=useGetChannel(video.owner)
+    const {refecthData:refetchWatchHistory}=useGetWatchHistory()
 
 
     return (
-        <Link to={url}>
-            <div className="w-full max-w-[300px] flex flex-col gap-y-2">
+            <div className="w-full max-w-[300px] flex flex-col gap-y-2 cursor-pointer"
+            onClick={()=>{
+                console.log('onclick of div')
+                const handleVideoWatch = async () => {
+                    console.log('handled watch video')
+                    await axios.post(`http://localhost:3000/api/v1/videos/watch?id=${video._id}`,{}, {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                            'x-refresh-token': `Refresh ${localStorage.getItem('refreshToken')}`,
+                        },
+                    })
+        
+                    refetchWatchHistory()
+                }
+        
+                handleVideoWatch()
+                navigate(url)
+            }}
+            >
                 <div className="w-full aspect-video rounded-md overflow-hidden bg-black relative z-[1]">
                     <img src={video.thumbnail}
                         alt="thumbnail"
@@ -44,6 +65,5 @@ export default function VideoCart({video,url}:{video:Video,url:string}) {
                     </div>
                 </div>
             </div>
-        </Link>
     )
 }

@@ -73,7 +73,6 @@ const getComments = asyncHandler(async (req, res, next) => {
 
     const { docs: comments, ...paginateData } = commentData
 
-    console.log(comments)
 
 
     res.status(200).json(new ApiResponse(200, 'Commetns retrieved Successfully', { comments, paginateData }))

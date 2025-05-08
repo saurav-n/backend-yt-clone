@@ -3,7 +3,7 @@ export default function VideoPlayer({videoFile,className=''}:{videoFile:string,c
     return(
         <div className={`${className} aspect-video flex flex-col gap-y-2 rounded-xl overflow-hidden`}>
             <div className="w-full h-full">
-                <video src={videoFile} controls autoPlay className="w-full h-full"></video>
+                <video src={videoFile} controls className="w-full h-full"></video>
             </div>
         </div>
     )
