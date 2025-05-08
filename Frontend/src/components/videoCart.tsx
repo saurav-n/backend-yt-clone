@@ -13,7 +13,7 @@ export default function VideoCart({video,url}:{video:Video,url:string}) {
     return (
         <Link to={url}>
             <div className="w-full max-w-[300px] flex flex-col gap-y-2">
-                <div className="w-full aspect-video rounded-md overflow-clip bg-black relative z-[1]">
+                <div className="w-full aspect-video rounded-md overflow-hidden bg-black relative z-[1]">
                     <img src={video.thumbnail}
                         alt="thumbnail"
                         className="w-full h-full object-fill" />
